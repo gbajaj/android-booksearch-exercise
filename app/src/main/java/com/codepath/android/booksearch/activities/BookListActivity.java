@@ -7,8 +7,12 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.codepath.android.booksearch.R;
+import com.codepath.android.booksearch.Rest.ApiClient;
+import com.codepath.android.booksearch.Rest.ApiInterface;
 import com.codepath.android.booksearch.adapters.BookAdapter;
 import com.codepath.android.booksearch.models.Book;
+import com.codepath.android.booksearch.models.Doc;
+import com.codepath.android.booksearch.models.Response;
 import com.codepath.android.booksearch.net.BookClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -17,8 +21,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 
 public class BookListActivity extends AppCompatActivity {
@@ -37,9 +44,32 @@ public class BookListActivity extends AppCompatActivity {
         // attach the adapter to the ListView
         lvBooks.setAdapter(bookAdapter);
         // Fetch the data remotely
-        fetchBooks("Oscar Wilde");
+        //fetchBooks("Oscar Wilde");
+        fetchBooksNew("Oscar Wilde");
     }
 
+    private void fetchBooksNew(String query){
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+        Call<Response> call = apiService.getBooks(query);
+
+        call.enqueue(new Callback<Response>() {
+            @Override
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                try{
+                    List<Doc> docs = response.body().getDocs();
+
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response> call, Throwable t) {
+
+            }
+        });
+    }
     // Executes an API call to the OpenLibrary search endpoint, parses the results
     // Converts them into an array of book objects and adds them to the adapter
     private void fetchBooks(String query) {
