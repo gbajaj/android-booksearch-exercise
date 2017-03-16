@@ -100,7 +100,7 @@ public class BookListActivity extends AppCompatActivity implements BookAdapter.L
 
   @Override public void onBookItemClick(Book book) {
     Intent intent = new Intent(this, BookDetailActivity.class);
-    //intent.putExtra("book", book);
+    intent.putExtra("book", book);
     startActivity(intent);
   }
 }
