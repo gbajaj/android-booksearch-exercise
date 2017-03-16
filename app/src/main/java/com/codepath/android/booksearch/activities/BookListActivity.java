@@ -10,20 +10,13 @@ import com.codepath.android.booksearch.R;
 import com.codepath.android.booksearch.Rest.ApiClient;
 import com.codepath.android.booksearch.Rest.ApiInterface;
 import com.codepath.android.booksearch.adapters.BookAdapter;
-import com.codepath.android.booksearch.models.Book;
 import com.codepath.android.booksearch.models.Doc;
 import com.codepath.android.booksearch.models.Response;
 import com.codepath.android.booksearch.net.BookClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -38,7 +31,8 @@ public class BookListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
         lvBooks = (ListView) findViewById(R.id.lvBooks);
-        ArrayList<Book> aBooks = new ArrayList<>();
+        //ArrayList<Book> aBooks = new ArrayList<>();
+        ArrayList<Doc> aBooks = new ArrayList<Doc>();
         // initialize the adapter
         bookAdapter = new BookAdapter(this, aBooks);
         // attach the adapter to the ListView
@@ -59,6 +53,18 @@ public class BookListActivity extends AppCompatActivity {
                 try{
                     List<Doc> docs = response.body().getDocs();
 
+                    ArrayList<Doc> books = new ArrayList<Doc>();
+                    books.addAll(docs);
+                    //final ArrayList<Book> books = Book.fromJson(docs);
+                    // Remove all books from the adapter
+                    bookAdapter.clear();
+                    // Load model objects into the adapter
+                    //for (Book book : books) {
+                     //   bookAdapter.add(book); // add book through the adapter
+                    //}
+                    bookAdapter.addAll(books);
+                    bookAdapter.notifyDataSetChanged();
+
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }
@@ -70,6 +76,7 @@ public class BookListActivity extends AppCompatActivity {
             }
         });
     }
+    /*
     // Executes an API call to the OpenLibrary search endpoint, parses the results
     // Converts them into an array of book objects and adds them to the adapter
     private void fetchBooks(String query) {
@@ -103,7 +110,7 @@ public class BookListActivity extends AppCompatActivity {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
