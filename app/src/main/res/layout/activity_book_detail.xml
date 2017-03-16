@@ -2,21 +2,25 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:gravity="center"
   android:orientation="vertical"
   tools:context=".activities.BookDetailActivity">
+
+  <include layout="@layout/toolbar_layout" />
 
   <ImageView
     android:id="@+id/ivBookCover"
     android:layout_width="@dimen/detail_bookCoverImage_size"
     android:layout_height="@dimen/detail_bookCoverImage_size"
+    android:layout_gravity="center"
     android:layout_marginTop="@dimen/detail_widgets_marginTop"
+    android:contentDescription="@string/detail_cover_description"
     tools:src="@drawable/ic_nocover" />
 
   <TextView
     android:id="@+id/tvTitle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:layout_marginTop="@dimen/detail_widgets_marginTop"
     android:paddingLeft="@dimen/detail_titleLabel_paddingStartEnd"
     android:paddingRight="@dimen/detail_titleLabel_paddingStartEnd"
@@ -27,6 +31,7 @@
     android:id="@+id/tvAuthor"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:layout_marginTop="@dimen/detail_widgets_marginTop"
     android:textSize="@dimen/detail_authorLabel_textSize"
     tools:text="Author Name" />
